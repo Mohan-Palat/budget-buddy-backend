@@ -10,6 +10,21 @@ const indexRouter = require('./app/routes/index');
 // Instantiate Express Application Object
 const app = express();
 
+// Require DB Configuration File
+const mongodbURI = require('./config/db');
+
+// Establish Database Connection
+mongoose.connect(mongodbURI, 
+    { 
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+    });
+mongoose.connection.once('open', () => {
+  console.log('Budget Bud Connected to Mongo');
+});
+
 // Define PORT for the API to run on
 const port = process.env.PORT || 5000;
 
