@@ -2,7 +2,7 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
 
-// Require Mongoose Model for Article
+// Require Mongoose Model for User
 const User = require('../models/user');
 
 // Instantiate a Router (mini app that only handles routes)
