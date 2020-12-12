@@ -5,6 +5,7 @@ const cors = require('cors');
 
 // Require Route Files
 const indexRouter = require('./app/routes/index');
+const usersRouter = require('./app/routes/users');
 
 
 // Instantiate Express Application Object
@@ -40,6 +41,7 @@ app.use(express.json());
 
 // Mount imported Routers
 app.use(indexRouter);
+app.use(usersRouter);
 
 // Start the server to listen for requests on a given port
 app.listen(port, () => {
