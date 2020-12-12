@@ -52,6 +52,33 @@ router.post('/api/budgets', (req, res) => {
 });
 
 
+/**
+ * Action:        SHOW
+ * Method:        GET
+ * URI:           /api/budgets/5fd5148ab6a7cb544e88ffb4
+ * Description:   Get An Budget by budget ID
+ */
+router.get('/api/budgets/:id', (req, res) => {
+    Budget.findById(req.params.id)
+    .then((budget) => {
+        if (budget) {
+        res.status(200).json({ budget: budget });
+        } else {
+        // If we couldn't find a document with the matching ID
+        res.status(404).json({
+            error: {
+            name: 'DocumentNotFoundError',
+            message: 'The provided ID doesn\'t match any documents'
+            }
+        });
+        }
+    })
+    // Catch any errors that might occur
+    .catch((error) => {
+        res.status(500).json({ error: error });
+    })
+});
+
 
 // Export the Router so we can use it in the server.js file
 module.exports = router;
