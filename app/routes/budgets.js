@@ -36,7 +36,8 @@ router.post('/api/budgets', (req, res) => {
 
     console.log(req.body)
     // TODO - update with current user in session
-    currentUser = "5fd438ce9897883dfc205b22"
+    // currentUser = "5fd438ce9897883dfc205b22", "5fd522b8e35363570315c5a1"
+    currentUser = "5fd522d5e35363570315c5a2"
     req.body.user = currentUser
     console.log(req.body)
     Budget.create(req.body)
@@ -62,7 +63,7 @@ router.get('/api/budgets/:id', (req, res) => {
     Budget.findById(req.params.id)
     .then((budget) => {
         if (budget) {
-        res.status(200).json({ budget: budget });
+            res.status(200).json({ budget: budget });
         } else {
         // If we couldn't find a document with the matching ID
         res.status(404).json({
@@ -77,6 +78,40 @@ router.get('/api/budgets/:id', (req, res) => {
     .catch((error) => {
         res.status(500).json({ error: error });
     })
+});
+
+
+/**
+ * Action:      UPDATE
+ * Method:      PATCH
+ * URI:         /api/budget/5fd5244f49cb7b583a2b3598
+ * Description: Update An Budget by Budget ID
+ */
+router.patch('/api/budgets/:id', (req, res) => {
+Budget.findById(req.params.id)
+    .then((budget) => {
+        if(budget) {
+            console.log(req.body)
+            // Pass the result of Mongoose's `.updateOne` method to the next `.then`
+            return budget.updateOne(req.body);
+        } else {
+            // If we couldn't find a document with the matching ID
+            res.status(404).json({
+                error: {
+                    name: 'DocumentNotFoundError',
+                    message: 'The provided ID doesn\'t match any documents'
+                }
+            });
+        }
+    })
+    .then(() => {
+        // If the update succeeded, return 204 and no JSON
+        res.status(204).end();
+    })
+    // Catch any errors that might occur
+    .catch((error) => {
+        res.status(500).json({ error: error });
+    });
 });
 
 
