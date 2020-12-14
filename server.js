@@ -29,6 +29,7 @@ mongoose.connection.once('open', () => {
 
 // Define PORT for the API to run on
 const port = process.env.PORT || 5000;
+const reactPort = 3000;
 
 /*** Middleware ***/
 
@@ -37,6 +38,11 @@ const port = process.env.PORT || 5000;
 //
 // The method `.use` sets up middleware for the Express application
 app.use(express.json());
+
+// Set CORS headers on response from this API using the `cors` NPM package.
+app.use(cors({ 
+    origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}` 
+}))
 
 /*** Routes ***/
 
