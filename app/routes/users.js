@@ -11,12 +11,13 @@ const router = express.Router();
 // NEW USER ROUTE
 router.get('/api/users/:id', (req, res) => {
     res.json({
-        currentUser: req.params.id,
+        currentUser: req.session.currentUser,
     })
 })
 
 // CREATE A NEW USER
 router.post('/api/users', (req, res) => {
+    console.log(req.body)
     //overwrite the user password with the hashed password, 
     //then pass that in to our database
     req.body.password = bcrypt.hashSync(
