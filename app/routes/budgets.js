@@ -93,6 +93,8 @@ router.patch('/api/budgets/:id', (req, res) => {
 Budget.findById(req.params.id)
     .then((budget) => {
         if(budget) {
+            // pass UserId as ObjectId
+            req.body.user = mongoose.Types.ObjectId(req.body.user)
             console.log(req.body)
             // Pass the result of Mongoose's `.updateOne` method to the next `.then`
             return budget.updateOne(req.body);
