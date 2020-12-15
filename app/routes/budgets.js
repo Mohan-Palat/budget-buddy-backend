@@ -7,6 +7,8 @@ const Budget = require('../models/budget');
 // Instantiate a Router (mini app that only handles routes)
 const router = express.Router();
 
+const mongoose = require('mongoose');
+
 /**
  * Action:        INDEX
  * Method:        GET
@@ -38,7 +40,7 @@ router.post('/api/budgets', (req, res) => {
     // TODO - update with current user in session
     // currentUser = "5fd438ce9897883dfc205b22", "5fd522b8e35363570315c5a1"
     // currentUser = "5fd522d5e35363570315c5a2"
-    // req.body.user = currentUser
+    req.body.user = mongoose.Types.ObjectId(req.body.user)
     console.log(req.body)
     Budget.create(req.body)
     // On a successful `create` action, respond with 201
@@ -158,6 +160,7 @@ router.delete('/api/budgets/:id', (req, res) => {
 router.get('/api/budgets/user/:id', (req, res) => {
     Budget.find({user: req.params.id})
     .then((budgets) => {
+        console.log(budgets)
         if (budgets) {
             res.status(200).json({ budgets: budgets });
         } else {
