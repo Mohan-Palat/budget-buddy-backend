@@ -15,6 +15,7 @@ const budgetSchema = Schema({
     carpayment: Number,
     gasoline: Number,
     others: Number,
+    total: Number,
     createdOn: { type: Date, default: Date.now },
 }, {
     timestamps: true,
