@@ -104,9 +104,10 @@ Budget.findById(req.params.id)
             });
         }
     })
-    .then(() => {
+    .then((budget) => {
         // If the update succeeded, return 204 and no JSON
-        res.status(204).end();
+        res.status(200).json({ budget: req.body.budgetname }).end()
+        // res.status(204).end();
     })
     // Catch any errors that might occur
     .catch((error) => {
