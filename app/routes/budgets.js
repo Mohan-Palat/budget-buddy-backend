@@ -37,8 +37,8 @@ router.post('/api/budgets', (req, res) => {
     console.log(req.body)
     // TODO - update with current user in session
     // currentUser = "5fd438ce9897883dfc205b22", "5fd522b8e35363570315c5a1"
-    currentUser = "5fd522d5e35363570315c5a2"
-    req.body.user = currentUser
+    // currentUser = "5fd522d5e35363570315c5a2"
+    // req.body.user = currentUser
     console.log(req.body)
     Budget.create(req.body)
     // On a successful `create` action, respond with 201
@@ -146,6 +146,33 @@ router.delete('/api/budgets/:id', (req, res) => {
     .catch((error) => {
         res.status(500).json({ error: error });
     });
+});
+
+/**
+ * Action:        SHOW
+ * Method:        GET
+ * URI:           /api/budgets/user/5fd5148ab6a7cb544e88ffb4
+ * Description:   Get An Budget by budget ID
+ */
+router.get('/api/budgets/user/:id', (req, res) => {
+    Budget.find({user: req.params.id})
+    .then((budgets) => {
+        if (budgets) {
+            res.status(200).json({ budgets: budgets });
+        } else {
+        // If we couldn't find a document with the matching ID
+        res.status(404).json({
+            error: {
+            name: 'DocumentNotFoundError',
+            message: 'The provided ID doesn\'t match any documents'
+            }
+        });
+        }
+    })
+    // Catch any errors that might occur
+    .catch((error) => {
+        res.status(500).json({ error: error });
+    })
 });
 
 
