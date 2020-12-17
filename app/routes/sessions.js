@@ -63,7 +63,7 @@ router.post('/api/sessions/', (req, res) => {
   })
 })
 
-router.delete('/sessions/logout', (req, res) => {
+router.delete('/api/sessions/logout', (req, res) => {
     console.log('logged out')
     req.session.destroy(() => {
         // res.redirect('/')
